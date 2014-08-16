@@ -109,7 +109,7 @@ Make a histogram of the total number of steps taken each day with the new datase
 hist(tapply(newdata$steps, newdata$date, sum), breaks = 20, xlab = "Total steps", main = " Total steps taken per day")
 ```
 
-![plot of chunk histogram2](figure/histogram2.png) 
+![plot of chunk histogram_imputed](figure/histogram_imputed.png) 
 
 Calculate the **mean** and **median** total number of steps taken per day.
 
@@ -126,11 +126,11 @@ median(tapply(newdata$steps, newdata$date, sum))
 ## [1] 10766
 ```
 
-Here we can see by imputing the missing data on the estimates, the mean and median are equivalent. By doing this we can see that the mean and median are very similiar to the estimates taken previously. 
+Here we can see by imputing the missing data on the estimates, the mean and median are equivalent. By doing this we can see that the mean and median are very similiar to the estimates taken previously, thus there is no impact. 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-Create a new factor variable with two levels --- weekend and weekday
+Create a new factor variable with two levels (i.e. day) to indicate if the day is a   weekend or weekday.
 
 ```r
 newdata$day <- as.factor(ifelse(weekdays(newdata$date) %in% c("Saturday", "Sunday"), 
@@ -145,5 +145,6 @@ xyplot(steps ~ interval | day, aggregate(steps ~ interval + day, newdata, mean),
        layout = c(1, 2), type = "l", group = day, xlab = " Interval" , ylab = "Number of steps")
 ```
 
-![plot of chunk timeplot](figure/timeplot.png) 
+![plot of chunk timeseriesplot_byday](figure/timeseriesplot_byday.png) 
 
+The graph shows that acitivity on the weekday has a greater peak from average number of steps taken on a given time interval. However, the weekend shows a greater distribution of steps taken over all intervals. This could be a clear indication that more activity is taken place during the weekend. 
