@@ -73,7 +73,7 @@ newdata[is.na(newdata[,1]),1] <- avg.steps[is.na(newdata[, 1]), 2]
 ```
 
 Make a histogram of the total number of steps taken each day with the new dataset. 
-```{r histogram2}
+```{r histogram_imputed}
 hist(tapply(newdata$steps, newdata$date, sum), breaks = 20, xlab = "Total steps", main = " Total steps taken per day")
 ```
 
@@ -83,20 +83,21 @@ mean(tapply(newdata$steps, newdata$date, sum))
 median(tapply(newdata$steps, newdata$date, sum))
 ```
 
-Here we can see by imputing the missing data on the estimates, the mean and median are equivalent. By doing this we can see that the mean and median are very similiar to the estimates taken previously. 
+Here we can see by imputing the missing data on the estimates, the mean and median are equivalent. By doing this we can see that the mean and median are very similiar to the estimates taken previously, thus there is no impact. 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-Create a new factor variable with two levels --- weekend and weekday
+Create a new factor variable with two levels (i.e. day) to indicate if the day is a   weekend or weekday.
 ```{r newvariable}
 newdata$day <- as.factor(ifelse(weekdays(newdata$date) %in% c("Saturday", "Sunday"), 
                                 "weekend", "weekday"))
 ```
 
 Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekdays or weekend days(y-axis).
-```{r timeplot}
+```{r timeseriesplot_byday}
 library(lattice)
 xyplot(steps ~ interval | day, aggregate(steps ~ interval + day, newdata, mean), 
        layout = c(1, 2), type = "l", group = day, xlab = " Interval" , ylab = "Number of steps")
 ```
 
+The graph shows that acitivity on the weekday has a greater peak from average number of steps taken on a given time interval. However, the weekend shows a greater distribution of steps taken over all intervals. This could be a clear indication that more activity is taken place during the weekend. 
